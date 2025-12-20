@@ -27,9 +27,12 @@ export const jobListingSchema = z.object({
 
 export type JobListingResult = z.infer<typeof jobListingSchema>;
 
+// Get API key from environment
+const FIRECRAWL_API_KEY = import.meta.env.VITE_FIRECRAWL_API_KEY;
+
 // Initialize Firecrawl client - will be undefined if API key is not provided
-const firecrawl = import.meta.env.VITE_FIRECRAWL_API_KEY 
-  ? new Firecrawl({ apiKey: import.meta.env.VITE_FIRECRAWL_API_KEY })
+const firecrawl = FIRECRAWL_API_KEY 
+  ? new Firecrawl({ apiKey: FIRECRAWL_API_KEY })
   : null;
 
 export class FirecrawlService {
@@ -49,6 +52,20 @@ export class FirecrawlService {
   }
   
   /**
+   * Validate URL format
+   * @param url - URL to validate
+   * @returns true if URL is valid
+   */
+  private isValidUrl(url: string): boolean {
+    try {
+      const urlObj = new URL(url);
+      return urlObj.protocol === 'http:' || urlObj.protocol === 'https:';
+    } catch {
+      return false;
+    }
+  }
+  
+  /**
    * Gather job listings from a specified URL using Firecrawl agent
    * @param url - The URL to scrape job listings from
    * @param count - Number of job listings to gather (default: 50)
@@ -62,15 +79,29 @@ export class FirecrawlService {
       throw new Error('Firecrawl API key not configured. Please add VITE_FIRECRAWL_API_KEY to your environment variables.');
     }
     
+    // Validate URL
+    if (!this.isValidUrl(url)) {
+      throw new Error('Invalid URL provided. URL must start with http:// or https://');
+    }
+    
+    // Validate count
+    if (count <= 0 || count > 200) {
+      throw new Error('Count must be between 1 and 200');
+    }
+    
     try {
       const result = await firecrawl.agent({
         prompt: `Gather ${count} of the most recent job listings from ${url} across various industries in South Africa with all the necessary data for Google Jobs Schema so I can list them on my aggregated job board site`,
         schema: jobListingSchema,
       });
       
-      return result as JobListingResult;
+      // Validate result matches schema at runtime
+      return jobListingSchema.parse(result);
     } catch (error) {
       console.error('Firecrawl API error:', error);
+      if (error instanceof z.ZodError) {
+        throw new Error('Failed to parse job listings: Invalid data format received from API');
+      }
       throw new Error('Failed to gather job listings. Please try again later.');
     }
   }
@@ -91,9 +122,13 @@ export class FirecrawlService {
         schema: jobListingSchema,
       });
       
-      return result as JobListingResult;
+      // Validate result matches schema at runtime
+      return jobListingSchema.parse(result);
     } catch (error) {
       console.error('Firecrawl API error:', error);
+      if (error instanceof z.ZodError) {
+        throw new Error('Failed to parse job listings: Invalid data format received from API');
+      }
       throw new Error('Failed to gather job listings. Please try again later.');
     }
   }
