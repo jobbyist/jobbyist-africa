@@ -17,6 +17,9 @@ interface AppConfig {
   openai: {
     apiKey?: string;
   };
+  firecrawl: {
+    apiKey?: string;
+  };
   analytics: {
     googleAnalyticsId?: string;
   };
@@ -82,6 +85,9 @@ const initializeConfig = (): AppConfig => {
     openai: {
       apiKey: import.meta.env.VITE_OPENAI_API_KEY,
     },
+    firecrawl: {
+      apiKey: import.meta.env.VITE_FIRECRAWL_API_KEY,
+    },
     analytics: {
       googleAnalyticsId: import.meta.env.VITE_GOOGLE_ANALYTICS_ID,
     },
@@ -141,6 +147,9 @@ export const logConfig = () => {
       },
       openai: {
         apiKey: config.openai.apiKey ? config.openai.apiKey.substring(0, 10) + '...' : 'Not set',
+      },
+      firecrawl: {
+        apiKey: config.firecrawl.apiKey ? config.firecrawl.apiKey.substring(0, 10) + '...' : 'Not set',
       },
     });
   }
