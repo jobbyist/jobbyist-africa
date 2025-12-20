@@ -1,6 +1,22 @@
 import { JobListingResult } from '@/lib/firecrawl';
 import { Job } from '@/utils/loadJobs';
 
+// Constants
+const MAX_SKILLS_PER_JOB = 5;
+
+// Common skill keywords for extraction
+const SKILL_KEYWORDS = [
+  // Technical skills
+  'Python', 'Java', 'JavaScript', 'TypeScript', 'React', 'Node.js', 'SQL', 'AWS', 'Azure',
+  'Docker', 'Kubernetes', 'Git', 'CI/CD', 'API', 'Microservices', 'Cloud',
+  // Business skills
+  'Project Management', 'Sales', 'Marketing', 'Business Development', 'Strategy',
+  'Leadership', 'Communication', 'Negotiation', 'Analysis', 'Planning',
+  // Domain skills
+  'Finance', 'Accounting', 'Legal', 'HR', 'Operations', 'Customer Service',
+  'Engineering', 'Research', 'Teaching', 'Healthcare', 'Consulting'
+];
+
 /**
  * Transform Firecrawl job listing to application job format
  */
@@ -16,8 +32,10 @@ export function transformFirecrawlJob(firecrawlJob: JobListingResult['job_listin
     ? 'hybrid'
     : 'full-time';
 
-  // Generate a unique ID based on source URL
-  const id = `scraped-${index}-${Date.now()}`;
+  // Generate a unique ID based on source URL and timestamp
+  const timestamp = Date.now();
+  const random = Math.floor(Math.random() * 1000);
+  const id = `scraped-${index}-${timestamp}-${random}`;
 
   // Extract location and determine if remote
   const location = firecrawlJob.location;
@@ -44,7 +62,15 @@ export function transformFirecrawlJob(firecrawlJob: JobListingResult['job_listin
   const experienceLevel = determineExperienceLevel(firecrawlJob.job_title);
 
   const now = new Date().toISOString();
-  const postedDate = new Date(firecrawlJob.date_posted).toISOString();
+  
+  // Parse posted date with error handling
+  let postedDate: string;
+  try {
+    postedDate = new Date(firecrawlJob.date_posted).toISOString();
+  } catch {
+    console.warn(`Invalid date_posted for job: ${firecrawlJob.job_title}, using current date`);
+    postedDate = now;
+  }
   const expiresDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(); // 30 days from now
 
   return {
@@ -78,20 +104,8 @@ export function transformFirecrawlJob(firecrawlJob: JobListingResult['job_listin
  * Extract skills from job title and description
  */
 function extractSkills(title: string, description: string): string[] {
-  const skillKeywords = [
-    // Technical skills
-    'Python', 'Java', 'JavaScript', 'TypeScript', 'React', 'Node.js', 'SQL', 'AWS', 'Azure',
-    'Docker', 'Kubernetes', 'Git', 'CI/CD', 'API', 'Microservices', 'Cloud',
-    // Business skills
-    'Project Management', 'Sales', 'Marketing', 'Business Development', 'Strategy',
-    'Leadership', 'Communication', 'Negotiation', 'Analysis', 'Planning',
-    // Domain skills
-    'Finance', 'Accounting', 'Legal', 'HR', 'Operations', 'Customer Service',
-    'Engineering', 'Research', 'Teaching', 'Healthcare', 'Consulting'
-  ];
-
   const text = `${title} ${description}`.toLowerCase();
-  const foundSkills = skillKeywords.filter(skill => 
+  const foundSkills = SKILL_KEYWORDS.filter(skill => 
     text.includes(skill.toLowerCase())
   );
 
@@ -107,7 +121,7 @@ function extractSkills(title: string, description: string): string[] {
     }
   }
 
-  return foundSkills.length > 0 ? foundSkills : ['Professional Skills', 'Communication'];
+  return foundSkills.length > 0 ? foundSkills.slice(0, MAX_SKILLS_PER_JOB) : ['Professional Skills', 'Communication'];
 }
 
 /**

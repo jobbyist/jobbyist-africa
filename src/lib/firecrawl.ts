@@ -30,6 +30,9 @@ export type JobListingResult = z.infer<typeof jobListingSchema>;
 // Get API key from environment
 const FIRECRAWL_API_KEY = import.meta.env.VITE_FIRECRAWL_API_KEY;
 
+// Constants
+const MAX_JOB_LISTINGS_PER_REQUEST = 200;
+
 // Initialize Firecrawl client - will be undefined if API key is not provided
 const firecrawl = FIRECRAWL_API_KEY 
   ? new Firecrawl({ apiKey: FIRECRAWL_API_KEY })
@@ -85,8 +88,8 @@ export class FirecrawlService {
     }
     
     // Validate count
-    if (count <= 0 || count > 200) {
-      throw new Error('Count must be between 1 and 200');
+    if (count <= 0 || count > MAX_JOB_LISTINGS_PER_REQUEST) {
+      throw new Error(`Count must be between 1 and ${MAX_JOB_LISTINGS_PER_REQUEST}`);
     }
     
     try {
