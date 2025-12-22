@@ -234,8 +234,16 @@ async function fetchJobsFromFirecrawl(url: string, count: number): Promise<Firec
       throw new Error(`Firecrawl API error: ${response.status} ${response.statusText}`);
     }
     
-    const data = await response.json() as FirecrawlResponse;
-    return data.job_listings || [];
+    const data = await response.json();
+    
+    // Validate response structure
+    if (!data || typeof data !== 'object') {
+      console.error('Invalid response format from Firecrawl API');
+      return [];
+    }
+    
+    const result = data as FirecrawlResponse;
+    return result.job_listings || [];
   } catch (error) {
     console.error(`Error fetching jobs from ${url}:`, error);
     return [];

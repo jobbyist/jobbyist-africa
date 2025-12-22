@@ -62,7 +62,7 @@ export function getAllJobs(): JobPosting[] {
   
   // Check if directory exists
   if (!existsSync(dataDir)) {
-    console.warn('Job listings directory does not exist:', dataDir);
+    // Return empty array silently - this is a valid state (no jobs yet)
     return [];
   }
   

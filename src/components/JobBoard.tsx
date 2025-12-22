@@ -72,10 +72,18 @@ function formatEmploymentType(type: string): string {
  * Format location for display
  */
 function formatLocation(address: JobPosting['jobLocation']['address']): string {
+  // Map country codes to names
+  const countryNames: Record<string, string> = {
+    'ZA': 'South Africa',
+    'NG': 'Nigeria'
+  };
+  
+  const countryName = countryNames[address.addressCountry] || address.addressCountry;
+  
   const parts = [
     address.addressLocality,
     address.addressRegion,
-    address.addressCountry === 'ZA' ? 'South Africa' : 'Nigeria'
+    countryName
   ].filter(Boolean);
   
   return parts.join(', ');
@@ -200,21 +208,31 @@ export const JobBoard = ({ jobs, title = "Latest Job Listings", showFilters = fa
               </div>
 
               {/* Apply Button */}
-              <Button 
-                className="w-full mt-4" 
-                variant="default"
-                asChild
-              >
-                <a
-                  href={job.hiringOrganization.sameAs || '#'}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2"
+              {job.hiringOrganization.sameAs ? (
+                <Button 
+                  className="w-full mt-4" 
+                  variant="default"
+                  asChild
                 >
-                  Apply Now
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-              </Button>
+                  <a
+                    href={job.hiringOrganization.sameAs}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2"
+                  >
+                    Apply Now
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+                </Button>
+              ) : (
+                <Button 
+                  className="w-full mt-4" 
+                  variant="secondary"
+                  disabled
+                >
+                  Application Link Unavailable
+                </Button>
+              )}
             </CardContent>
           </Card>
         ))}
