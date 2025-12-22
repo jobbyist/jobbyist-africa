@@ -11,6 +11,8 @@ Jobbyist is a comprehensive job discovery and career management platform designe
 
 For comprehensive setup and deployment information, see:
 - **[SECRETS_SETUP_GUIDE.md](SECRETS_SETUP_GUIDE.md)** - 🔐 **START HERE**: Step-by-step guide for configuring GitHub Secrets
+- **[SETUP_JOB_SCRAPING.md](SETUP_JOB_SCRAPING.md)** - 🤖 **NEW**: Automated job scraping setup guide
+- **[JOB_SCRAPING_AUTOMATION.md](JOB_SCRAPING_AUTOMATION.md)** - 🕷️ Complete job scraping system documentation
 - **[VERCEL_SETUP.md](VERCEL_SETUP.md)** - 🚀 Vercel deployment guide with Supabase configuration
 - **[VERCEL_SUPABASE_INTEGRATION.md](VERCEL_SUPABASE_INTEGRATION.md)** - 🔗 Complete guide for Supabase Edge Functions and migrations with Vercel
 - **[REQUIRED_SECRETS.md](REQUIRED_SECRETS.md)** - Complete reference for all required and optional secrets
@@ -23,6 +25,7 @@ For comprehensive setup and deployment information, see:
 ### Key Features
 
 - 🔍 **Smart Job Search** - Discover curated job opportunities from verified companies
+- 🤖 **Automated Job Scraping** - Daily updates with 50+ new jobs from multiple sources (MyJobMag, Indeed, Careers24)
 - 📝 **Free Resume Builder** - Create ATS-friendly resumes with AI-powered suggestions
 - 🎯 **Resume Audit** - Get professional feedback on your resume
 - 🎙️ **The Job Post Podcast** - Career advice and success stories
@@ -30,6 +33,14 @@ For comprehensive setup and deployment information, see:
 - 🌍 **Africa-Focused** - Tailored for African and international job markets
 
 ## Recent Updates
+
+### Job Scraping Automation (NEW)
+- 🤖 Automated daily job scraping at 5 PM UTC using Firecrawl API
+- 🔄 Scrapes 50+ jobs daily from multiple sources across all industries
+- ✅ Google Jobs Schema compliant formatting
+- 🌐 Multi-source support: MyJobMag, Indeed, Careers24, and more
+- 🧪 Test mode available for scraping 10 jobs
+- 📊 Comprehensive test coverage with 24+ unit tests
 
 ### UI/UX Improvements
 - ✅ Replaced briefcase icons with custom Jobbyist logo throughout the site
