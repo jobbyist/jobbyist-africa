@@ -1,0 +1,110 @@
+name: Scrape Job Listings Daily
+
+on:
+  # Manual trigger with test mode option
+  workflow_dispatch:
+    inputs:
+      test:
+        description: 'Test mode (scrape only 10 jobs)'
+        required: false
+        type: boolean
+        default: false
+  # Daily automatic scraping at 5 PM UTC (which is 7 PM SAST / 6 PM WAT)
+  schedule:
+    - cron: '0 17 * * *'
+
+jobs:
+  scrape-jobs:
+    name: Scrape Jobs from Multiple Sources
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Link Supabase project
+        run: |
+          supabase link --project-ref ${{ secrets.VITE_SUPABASE_PROJECT_ID }}
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+
+      - name: Set FIRECRAWL_API_KEY secret for job-scraper function
+        run: |
+          echo "Setting FIRECRAWL_API_KEY secret..."
+          supabase secrets set FIRECRAWL_API_KEY="${{ secrets.FIRECRAWL_API_KEY }}"
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+
+      - name: Deploy job-scraper function
+        run: |
+          echo "Deploying job-scraper function..."
+          supabase functions deploy job-scraper
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+
+      - name: Invoke job-scraper function
+        run: |
+          echo "🔍 Starting job scraper..."
+          
+          # Determine if this is a test run
+          TEST_MODE="${{ github.event.inputs.test || 'false' }}"
+          
+          if [ "$TEST_MODE" = "true" ]; then
+            echo "Running in TEST MODE - scraping 10 jobs"
+            BODY='{"test": true}'
+          else
+            echo "Running in PRODUCTION MODE - scraping 50+ jobs"
+            BODY='{}'
+          fi
+          
+          response=$(curl -s -X POST \
+            "${{ secrets.VITE_SUPABASE_URL }}/functions/v1/job-scraper" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d "$BODY")
+
+          echo "Response: $response"
+
+          # Check if response contains success
+          if echo "$response" | grep -q '"success":true'; then
+            echo "✅ Job scraping completed successfully!"
+            
+            # Extract job counts from response
+            jobs_scraped=$(echo "$response" | grep -o '"jobsScraped":[0-9]*' | grep -o '[0-9]*' || echo "unknown")
+            jobs_inserted=$(echo "$response" | grep -o '"jobsInserted":[0-9]*' | grep -o '[0-9]*' || echo "unknown")
+            
+            echo "📊 Jobs scraped: $jobs_scraped"
+            echo "📊 Jobs inserted/updated: $jobs_inserted"
+          else
+            echo "❌ Failed to scrape job listings"
+            echo "Error response: $response"
+            exit 1
+          fi
+
+      - name: Summary
+        if: success()
+        run: |
+          echo "✅ Job Scraping Complete!"
+          echo ""
+          echo "📊 Summary:"
+          echo "- Scraped jobs from multiple sources (MyJobMag, Indeed, Careers24, etc.)"
+          echo "- All jobs formatted according to Google Jobs Schema"
+          echo "- Jobs stored in Supabase database"
+          echo "- Duplicate jobs filtered automatically"
+          echo ""
+          echo "🕐 Next scheduled run: Tomorrow at 5 PM UTC"
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "❌ Job scraping workflow failed"
+          echo "Please check the logs above for error details"
+          echo "Common issues:"
+          echo "  - FIRECRAWL_API_KEY not configured"
+          echo "  - Supabase credentials missing"
+          echo "  - Network connectivity issues"
