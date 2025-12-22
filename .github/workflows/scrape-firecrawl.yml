@@ -1,0 +1,84 @@
+name: Scrape Firecrawl Jobs Daily
+
+on:
+  # Manual trigger
+  workflow_dispatch:
+  # Daily at 6 AM UTC (targeting African time zones)
+  schedule:
+    - cron: '0 6 * * *'
+
+jobs:
+  scrape-and-commit:
+    name: Fetch and Commit Job Listings
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Firecrawl scraper
+        env:
+          FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
+        run: |
+          echo "🔍 Starting job scraper..."
+          npx tsx scripts/firecrawl-fetch-and-commit.ts
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          git diff --quiet data/job-listings/ || echo "changes=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push changes
+        if: steps.check_changes.outputs.changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          # Get today's date for commit message
+          TODAY=$(date +%Y-%m-%d)
+          
+          git add data/job-listings/
+          git commit -m "chore: add job listings for $TODAY"
+          git push
+
+      - name: Summary
+        if: success()
+        run: |
+          echo "✅ Job Scraping Complete!"
+          echo ""
+          echo "📊 Summary:"
+          echo "- Scraped jobs from Firecrawl API"
+          echo "- All jobs formatted according to Google Jobs Schema"
+          echo "- Jobs stored in data/job-listings/"
+          echo ""
+          if [ "${{ steps.check_changes.outputs.changes }}" == "true" ]; then
+            echo "📝 Changes committed and pushed to repository"
+          else
+            echo "ℹ️ No new jobs to commit"
+          fi
+          echo ""
+          echo "🕐 Next scheduled run: Tomorrow at 6 AM UTC"
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "❌ Job scraping workflow failed"
+          echo "Please check the logs above for error details"
+          echo "Common issues:"
+          echo "  - FIRECRAWL_API_KEY not configured in repository secrets"
+          echo "  - Network connectivity issues"
+          echo "  - API rate limits exceeded"
