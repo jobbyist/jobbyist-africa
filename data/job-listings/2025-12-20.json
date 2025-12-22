@@ -1,0 +1,190 @@
+[
+  {
+    "@context": "https://schema.org/",
+    "@type": "JobPosting",
+    "title": "Business Development Manager",
+    "description": "Join us as a Business Development Manager to identify and pursue new business opportunities. You'll build relationships with potential clients, negotiate deals, and expand our market presence.",
+    "identifier": {
+      "@type": "PropertyValue",
+      "name": "TFG",
+      "value": "sa-001"
+    },
+    "datePosted": "2025-12-20T00:00:00.000Z",
+    "validThrough": "2026-01-20T00:00:00.000Z",
+    "employmentType": "CONTRACT",
+    "hiringOrganization": {
+      "@type": "Organization",
+      "name": "TFG",
+      "sameAs": "https://tfg.co.za/careers",
+      "logo": "https://tfg.co.za/logo.png"
+    },
+    "jobLocation": {
+      "@type": "Place",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Sandton",
+        "addressRegion": "Gauteng",
+        "addressCountry": "ZA"
+      }
+    },
+    "baseSalary": {
+      "@type": "MonetaryAmount",
+      "currency": "ZAR",
+      "value": {
+        "@type": "QuantitativeValue",
+        "value": 419899,
+        "unitText": "YEAR"
+      }
+    }
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "JobPosting",
+    "title": "Sales Manager",
+    "description": "We are looking for a Sales Manager to lead our sales team and drive revenue growth. You'll set sales targets, coach sales representatives, and develop sales strategies.",
+    "identifier": {
+      "@type": "PropertyValue",
+      "name": "Sanlam",
+      "value": "sa-002"
+    },
+    "datePosted": "2025-12-20T00:00:00.000Z",
+    "validThrough": "2026-01-20T00:00:00.000Z",
+    "employmentType": "FULL_TIME",
+    "hiringOrganization": {
+      "@type": "Organization",
+      "name": "Sanlam",
+      "sameAs": "https://sanlam.co.za/careers",
+      "logo": "https://sanlam.co.za/logo.png"
+    },
+    "jobLocation": {
+      "@type": "Place",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Port Elizabeth",
+        "addressRegion": "Eastern Cape",
+        "addressCountry": "ZA"
+      }
+    },
+    "baseSalary": {
+      "@type": "MonetaryAmount",
+      "currency": "ZAR",
+      "value": {
+        "@type": "QuantitativeValue",
+        "value": 411757,
+        "unitText": "YEAR"
+      }
+    }
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "JobPosting",
+    "title": "Software Engineer",
+    "description": "We're seeking a talented Software Engineer to join our growing team. You'll work on developing innovative solutions and collaborating with cross-functional teams.",
+    "identifier": {
+      "@type": "PropertyValue",
+      "name": "TechCorp",
+      "value": "sa-003"
+    },
+    "datePosted": "2025-12-20T00:00:00.000Z",
+    "validThrough": "2026-01-20T00:00:00.000Z",
+    "employmentType": "FULL_TIME",
+    "hiringOrganization": {
+      "@type": "Organization",
+      "name": "TechCorp",
+      "sameAs": "https://techcorp.com/careers"
+    },
+    "jobLocation": {
+      "@type": "Place",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Cape Town",
+        "addressRegion": "Western Cape",
+        "addressCountry": "ZA"
+      }
+    },
+    "jobLocationType": "TELECOMMUTE",
+    "baseSalary": {
+      "@type": "MonetaryAmount",
+      "currency": "ZAR",
+      "value": {
+        "@type": "QuantitativeValue",
+        "value": 550000,
+        "unitText": "YEAR"
+      }
+    }
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "JobPosting",
+    "title": "Marketing Manager",
+    "description": "Join our marketing team as a Marketing Manager. You'll develop and execute marketing strategies, manage campaigns, and drive brand awareness.",
+    "identifier": {
+      "@type": "PropertyValue",
+      "name": "FutureMedia",
+      "value": "ng-001"
+    },
+    "datePosted": "2025-12-20T00:00:00.000Z",
+    "validThrough": "2026-01-20T00:00:00.000Z",
+    "employmentType": "FULL_TIME",
+    "hiringOrganization": {
+      "@type": "Organization",
+      "name": "FutureMedia",
+      "sameAs": "https://futuremedia.ng/careers"
+    },
+    "jobLocation": {
+      "@type": "Place",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Lagos",
+        "addressRegion": "Lagos State",
+        "addressCountry": "NG"
+      }
+    },
+    "baseSalary": {
+      "@type": "MonetaryAmount",
+      "currency": "NGN",
+      "value": {
+        "@type": "QuantitativeValue",
+        "value": 6000000,
+        "unitText": "YEAR"
+      }
+    }
+  },
+  {
+    "@context": "https://schema.org/",
+    "@type": "JobPosting",
+    "title": "Data Analyst",
+    "description": "We're looking for a Data Analyst to help us make data-driven decisions. You'll analyze large datasets, create visualizations, and provide actionable insights.",
+    "identifier": {
+      "@type": "PropertyValue",
+      "name": "DataCorp",
+      "value": "ng-002"
+    },
+    "datePosted": "2025-12-20T00:00:00.000Z",
+    "validThrough": "2026-01-20T00:00:00.000Z",
+    "employmentType": "FULL_TIME",
+    "hiringOrganization": {
+      "@type": "Organization",
+      "name": "DataCorp",
+      "sameAs": "https://datacorp.ng/careers"
+    },
+    "jobLocation": {
+      "@type": "Place",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Abuja",
+        "addressRegion": "Federal Capital Territory",
+        "addressCountry": "NG"
+      }
+    },
+    "baseSalary": {
+      "@type": "MonetaryAmount",
+      "currency": "NGN",
+      "value": {
+        "@type": "QuantitativeValue",
+        "value": 4800000,
+        "unitText": "YEAR"
+      }
+    }
+  }
+]
