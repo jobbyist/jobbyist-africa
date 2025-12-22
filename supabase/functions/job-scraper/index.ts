@@ -244,13 +244,6 @@ serve(async (req) => {
     const isTestRun = body.test === true;
     const jobCount = isTestRun ? 10 : 50;
 
-    const supabase = createClient(supabaseUrl, supabaseKey);
-
-    // Parse request body to check if this is a test run
-    const body = await req.json().catch(() => ({}));
-    const isTestRun = body.test === true;
-    const jobCount = isTestRun ? 10 : 50;
-
     console.log(`Starting job scraper - Test mode: ${isTestRun}, Target count: ${jobCount}`);
 
     let allJobs: JobListing[] = [];
