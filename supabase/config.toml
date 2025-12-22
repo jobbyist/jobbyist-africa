@@ -3,7 +3,7 @@ project_id = "xzlyudwzhbqsdlwpfmwk"
 [auth]
 enable_signup = true
 # Disable email confirmation requirement - users can log in immediately after signup
-enable_confirmations = false
+enable_confirmations = true
 
 [functions.job-scraper]
 verify_jwt = false
