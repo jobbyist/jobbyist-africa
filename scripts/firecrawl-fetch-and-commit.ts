@@ -81,9 +81,10 @@ const JOB_SOURCES = [
   'https://www.myjobmag.co.za/jobs',
   'https://www.indeed.co.za/jobs',
   'https://www.careers24.com/jobs',
+  'https://www.pnet.co.za/jobs',
 ];
-const TARGET_JOBS_PER_SOURCE = 10;
-const TOTAL_TARGET_JOBS = 30;
+const TARGET_JOBS_PER_SOURCE = 13;
+const TOTAL_TARGET_JOBS = 50;
 
 /**
  * Normalize employment type to Google Jobs Schema format
@@ -187,7 +188,7 @@ async function fetchJobsFromFirecrawl(url: string, count: number): Promise<Firec
     throw new Error('FIRECRAWL_API_KEY environment variable is not set');
   }
   
-  const prompt = `Gather ${count} of the most recent job listings from ${url} in Nigeria and South Africa. Include jobs across various industries with all necessary data for Google Jobs Schema.`;
+  const prompt = `Gather ${count} of the most recent job listings from ${url} in South Africa. Include jobs across various industries (technology, finance, sales, marketing, engineering, healthcare, education, etc.) with all necessary data for Google Jobs Schema.`;
   
   try {
     const response = await fetch('https://api.firecrawl.dev/v1/agent', {
@@ -255,7 +256,7 @@ async function fetchJobsFromFirecrawl(url: string, count: number): Promise<Firec
  */
 async function main() {
   console.log('🚀 Starting Firecrawl job scraper...');
-  console.log(`Target: ${TOTAL_TARGET_JOBS} jobs from Nigeria/South Africa`);
+  console.log(`Target: ${TOTAL_TARGET_JOBS} jobs from South Africa across various industries`);
   
   const allJobs: JobPosting[] = [];
   
