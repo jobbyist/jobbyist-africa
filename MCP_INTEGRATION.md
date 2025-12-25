@@ -14,9 +14,11 @@ The MCP configuration is located in `.github/copilot-mcp.json` and includes:
 
 - **Server Name**: `firecrawl-mcp`
 - **Command**: `npx -y firecrawl-mcp`
-- **API Key**: Configured via environment variable `FIRECRAWL_API_KEY`
+- **API Key**: Currently hardcoded (see Security section below for best practices)
 
 ### Configuration File
+
+The current configuration as deployed:
 
 ```json
 {
@@ -31,6 +33,8 @@ The MCP configuration is located in `.github/copilot-mcp.json` and includes:
   }
 }
 ```
+
+> **Note**: This configuration includes a hardcoded API key for immediate use. See the Security section for production recommendations.
 
 ## What This Enables
 
@@ -66,12 +70,46 @@ The MCP server runs automatically when GitHub Copilot is active in your developm
 
 ## Security
 
-⚠️ **Important**: The API key is stored directly in the configuration file. In production:
+⚠️ **Important Security Notice**: The API key is currently hardcoded in the configuration file (`.github/copilot-mcp.json`). This exposes the credential in version control.
 
-- Consider using environment variables or secret management
-- Rotate API keys regularly
-- Monitor API usage for unusual activity
-- Keep the configuration file in version control but consider alternative secret storage for production
+### Current Configuration
+
+The configuration uses a hardcoded API key as provided in the integration requirements. This approach is suitable for:
+- Development and testing environments
+- Demo or POC deployments
+- Shared team API keys with limited scope
+
+### Recommended for Production
+
+For production environments, consider these alternatives:
+
+1. **Environment Variables**: Reference environment variables instead of hardcoding
+   ```json
+   {
+     "mcpServers": {
+       "firecrawl-mcp": {
+         "command": "npx",
+         "args": ["-y", "firecrawl-mcp"],
+         "env": {
+           "FIRECRAWL_API_KEY": "${FIRECRAWL_API_KEY}"
+         }
+       }
+     }
+   }
+   ```
+
+2. **Secret Management**: Use GitHub Secrets or other secret management systems
+3. **Key Rotation**: Regularly rotate API keys and update the configuration
+4. **Access Monitoring**: Monitor API usage for unusual activity
+5. **Scope Limitation**: Use API keys with minimal required permissions
+
+### Best Practices
+
+- ✅ Never commit production API keys to public repositories
+- ✅ Use separate API keys for development and production
+- ✅ Set up API key expiration and rotation policies
+- ✅ Monitor and audit API key usage
+- ✅ Revoke compromised keys immediately
 
 ## Troubleshooting
 
