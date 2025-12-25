@@ -11,7 +11,8 @@ Jobbyist is a comprehensive job discovery and career management platform designe
 
 For comprehensive setup and deployment information, see:
 - **[SECRETS_SETUP_GUIDE.md](SECRETS_SETUP_GUIDE.md)** - 🔐 **START HERE**: Step-by-step guide for configuring GitHub Secrets
-- **[SETUP_JOB_SCRAPING.md](SETUP_JOB_SCRAPING.md)** - 🤖 **NEW**: Automated job scraping setup guide
+- **[MCP_INTEGRATION.md](MCP_INTEGRATION.md)** - 🤖 **NEW**: GitHub Copilot MCP integration with Firecrawl
+- **[SETUP_JOB_SCRAPING.md](SETUP_JOB_SCRAPING.md)** - 🤖 Automated job scraping setup guide
 - **[JOB_SCRAPING_AUTOMATION.md](JOB_SCRAPING_AUTOMATION.md)** - 🕷️ Complete job scraping system documentation
 - **[VERCEL_SETUP.md](VERCEL_SETUP.md)** - 🚀 Vercel deployment guide with Supabase configuration
 - **[VERCEL_SUPABASE_INTEGRATION.md](VERCEL_SUPABASE_INTEGRATION.md)** - 🔗 Complete guide for Supabase Edge Functions and migrations with Vercel
