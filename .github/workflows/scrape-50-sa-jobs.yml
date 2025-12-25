@@ -1,0 +1,96 @@
+name: Scrape 50 South African Jobs
+
+on:
+  # Manual trigger only
+  workflow_dispatch:
+    inputs:
+      description:
+        description: 'Run description (optional)'
+        required: false
+        default: 'Scraping 50 recent South African job listings'
+
+jobs:
+  scrape-and-publish:
+    name: Scrape and Publish 50 SA Jobs
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run job scraper
+        env:
+          FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
+        run: |
+          echo "🚀 Starting South African job scraper..."
+          echo "📊 Target: 50 recent jobs from South Africa"
+          echo ""
+          npx tsx scripts/scrape-and-publish-50-jobs.ts
+
+      - name: Check for changes
+        id: check_changes
+        run: |
+          if git diff --quiet database/jobs.json; then
+            echo "changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push changes
+        if: steps.check_changes.outputs.changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          # Get today's date for commit message
+          TODAY=$(date +%Y-%m-%d)
+          
+          git add database/jobs.json
+          git commit -m "feat: add 50 South African job listings ($TODAY)"
+          git push
+
+      - name: Summary
+        if: success()
+        run: |
+          echo "✅ Job Scraping and Publishing Complete!"
+          echo ""
+          echo "📊 Summary:"
+          echo "- Scraped 50 recent jobs from South African job sites"
+          echo "- Jobs from MyJobMag, Careers24, PNet, and Indeed"
+          echo "- Jobs across various industries"
+          echo "- All jobs formatted according to database schema"
+          echo "- Jobs published to database/jobs.json"
+          echo ""
+          if [ "${{ steps.check_changes.outputs.changes }}" == "true" ]; then
+            echo "📝 Changes committed and pushed to repository"
+            echo "🌐 Jobs will be visible on the website after deployment"
+          else
+            echo "ℹ️ No new jobs to commit (all were duplicates)"
+          fi
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "❌ Job scraping workflow failed"
+          echo ""
+          echo "Please check the logs above for error details"
+          echo ""
+          echo "Common issues:"
+          echo "  - FIRECRAWL_API_KEY not configured in repository secrets"
+          echo "  - Network connectivity issues with Firecrawl API"
+          echo "  - API rate limits exceeded"
+          echo "  - Invalid response from job sites"
