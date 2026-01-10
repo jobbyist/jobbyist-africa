@@ -32,12 +32,6 @@ export const SUPPORTED_COUNTRIES: CountryInfo[] = [
     flag: '🇬🇭'
   },
   {
-    code: 'EG',
-    name: 'Egypt',
-    subdomain: 'eg.jobbyist.africa',
-    flag: '🇪🇬'
-  },
-  {
     code: 'OTHER',
     name: 'Other Countries',
     subdomain: 'www.jobbyist.africa',
