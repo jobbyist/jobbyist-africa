@@ -128,7 +128,7 @@ const UpskillingPrograms = () => {
           .eq('user_id', user.id);
 
         if (badgesError) throw badgesError;
-        const badges = badgesData?.map((item: any) => item.badges).filter(Boolean) || [];
+        const badges = badgesData?.map((item: { badges: string }) => item.badges).filter(Boolean) || [];
         setUserBadges(badges);
       }
     } catch (error) {
