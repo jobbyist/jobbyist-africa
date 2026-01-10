@@ -64,7 +64,7 @@ const Preloader = ({ onLoadingComplete }: PreloaderProps) => {
       {/* Logo */}
       <div className="mb-8 animate-pulse">
         <img 
-          src="/JOBBYIST.svg" 
+          src="/jobbyist26.svg" 
           alt="Jobbyist Logo" 
           className="h-48 w-48 md:h-64 md:w-64"
         />
