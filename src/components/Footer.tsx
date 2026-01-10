@@ -31,7 +31,7 @@ const Footer = () => {
   };
 
   const socialLinks = [
-    { icon: Facebook, href: 'https://facebook.com/jobbyist', label: 'Facebook' },
+    { icon: Facebook, href: 'https://facebook.com/JobbyistZA', label: 'Facebook' },
     { icon: Twitter, href: 'https://twitter.com/jobbyist', label: 'Twitter' },
     { icon: Instagram, href: 'https://instagram.com/jobbyist', label: 'Instagram' },
     { icon: Linkedin, href: 'https://linkedin.com/company/jobbyist', label: 'LinkedIn' },
@@ -44,8 +44,8 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <img src="/JOBBYIST.svg" alt="Jobbyist Logo" style={{ width: '200px', height: 'auto' }} />
-              <Badge variant="secondary" className="ml-2">Beta</Badge>
+              <img src="/jobbyist26.svg" alt="Jobbyist Logo" style={{ width: '200px', height: 'auto' }} />
+             
             </div>
             <p className="text-muted-foreground mb-6 max-w-md">
               Africa's leading job platform connecting top talent with premier employers across the continent.
