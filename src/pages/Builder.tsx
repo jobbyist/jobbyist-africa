@@ -101,7 +101,7 @@ const Builder = () => {
               <Button variant="ghost" size="sm" asChild>
                 <Link to="/">
                   <FileText className="h-4 w-4 mr-1 md:mr-2" />
-                  {isMobile ? 'Jobs' : 'Browse Jobs'}
+                  {isMobile ? 'Home' : 'Back to Home'}
                 </Link>
               </Button>
               {user && (

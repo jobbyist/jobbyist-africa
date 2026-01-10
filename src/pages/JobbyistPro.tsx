@@ -160,7 +160,7 @@ const JobbyistPro = () => {
               <Button variant="ghost" size="sm" asChild>
                 <Link to="/">
                   <FileText className="h-4 w-4 mr-1 md:mr-2" />
-                  {isMobile ? 'Jobs' : 'Browse Jobs'}
+                  {isMobile ? 'Home' : 'Back to Home'}
                 </Link>
               </Button>
               {user && (
@@ -473,7 +473,7 @@ const JobbyistPro = () => {
               <ArrowRight className="h-5 w-5 ml-2" />
             </Button>
             <Button variant="outline" size="lg" asChild>
-              <Link to="/">Browse Free Jobs</Link>
+              <Link to="/">Back to Home</Link>
             </Button>
           </div>
           <p className="text-sm text-muted-foreground mt-4">

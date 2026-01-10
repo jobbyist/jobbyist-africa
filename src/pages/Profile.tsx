@@ -262,7 +262,7 @@ const Profile = () => {
               <Button variant="ghost" size="sm" asChild>
                 <Link to="/">
                   <FileText className="h-4 w-4 mr-1 md:mr-2" />
-                  {isMobile ? 'Jobs' : 'Browse Jobs'}
+                  {isMobile ? 'Home' : 'Back to Home'}
                 </Link>
               </Button>
               <Button variant="ghost" size="sm" onClick={signOut}>
@@ -457,7 +457,7 @@ const Profile = () => {
                       <Heart className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
                       <p className="text-muted-foreground">No saved jobs yet</p>
                       <Button asChild variant="link" className="mt-2">
-                        <Link to="/">Browse Jobs</Link>
+                        <Link to="/">Back to Home</Link>
                       </Button>
                     </div>
                   ) : (
@@ -483,9 +483,9 @@ const Profile = () => {
                       ))}
                       
                       {savedJobs.length > 5 && (
-                        <Button asChild variant="outline" className="w-full">
-                          <Link to="/saved-jobs">View All Saved Jobs</Link>
-                        </Button>
+                        <p className="text-sm text-muted-foreground text-center">
+                          You have {savedJobs.length} saved jobs
+                        </p>
                       )}
                     </div>
                   )}
