@@ -39,7 +39,7 @@ const LandingPage = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-center">
             <div className="flex items-center gap-2">
-              <img src="/JOBBYIST.svg" alt="Jobbyist Logo" style={{ width: '200px', height: 'auto' }} />
+              <img src="/jobbyist26.svg" alt="Jobbyist Logo" style={{ width: '200px', height: 'auto' }} />
             </div>
           </div>
         </div>
@@ -54,12 +54,12 @@ const LandingPage = () => {
           </Badge>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-            Welcome to Jobbyist Africa
+            Welcome to Jobbyist
           </h1>
           
           <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
             Africa's Premier Job Discovery & Career Management Platform. 
-            Select your country to access job opportunities tailored to your region.
+            Select your country/region to access job opportunities tailored to your region.
           </p>
 
           {/* Auto-detected Country Card */}
