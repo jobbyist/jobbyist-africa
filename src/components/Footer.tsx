@@ -1,6 +1,6 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Briefcase, Facebook, Twitter, Instagram, Linkedin, Search, Moon, Sun, Smartphone } from 'lucide-react';
+import { Briefcase, Facebook, Linkedin, Search, Moon, Sun, Smartphone } from 'lucide-react';
 import { useState } from 'react';
 import { useTheme } from 'next-themes';
 import SearchModal from './SearchModal';
@@ -32,8 +32,6 @@ const Footer = () => {
 
   const socialLinks = [
     { icon: Facebook, href: 'https://facebook.com/JobbyistZA', label: 'Facebook' },
-    { icon: Twitter, href: 'https://twitter.com/jobbyist', label: 'Twitter' },
-    { icon: Instagram, href: 'https://instagram.com/jobbyist', label: 'Instagram' },
     { icon: Linkedin, href: 'https://linkedin.com/company/jobbyist', label: 'LinkedIn' },
   ];
 

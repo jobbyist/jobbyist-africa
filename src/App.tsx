@@ -9,7 +9,6 @@ import { useState, useEffect } from "react";
 
 import { ChatbotButton } from "@/components/ChatbotButton";
 import Preloader from "@/components/Preloader";
-import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import { OnboardingHandler } from "@/components/OnboardingHandler";
 
 import AnimatedBackground from "@/components/AnimatedBackground";
@@ -79,9 +78,6 @@ const App = () => {
                 
                 {/* AI Chatbot - Available on all pages */}
                 <ChatbotButton />
-                
-                {/* PWA Install Prompt */}
-                <PWAInstallPrompt />
                 
                 {/* Onboarding for new users */}
                 <OnboardingHandler />
