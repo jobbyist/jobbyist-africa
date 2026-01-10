@@ -128,7 +128,7 @@ const UpskillingPrograms = () => {
           .eq('user_id', user.id);
 
         if (badgesError) throw badgesError;
-        const badges = badgesData?.map((item: any) => item.badges).filter(Boolean) || [];
+        const badges = badgesData?.map((item: { badges: string }) => item.badges).filter(Boolean) || [];
         setUserBadges(badges);
       }
     } catch (error) {
@@ -437,9 +437,9 @@ const UpskillingPrograms = () => {
             )}
             {user && (
               <Button size="lg" className="text-lg px-8" asChild>
-                <Link to="/jobs">
+                <Link to="/">
                   <ChevronRight className="h-5 w-5 mr-2" />
-                  Find Your Next Job
+                  Back to Home
                 </Link>
               </Button>
             )}

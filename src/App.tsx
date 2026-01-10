@@ -14,14 +14,11 @@ import { OnboardingHandler } from "@/components/OnboardingHandler";
 
 import AnimatedBackground from "@/components/AnimatedBackground";
 
-import Index from "./pages/Index";
-import Jobs from "./pages/Jobs";
+import LandingPage from "./pages/LandingPage";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
 import JobbyistPro from "./pages/JobbyistPro";
 import Builder from "./pages/Builder";
-import CompanyProfile from "./pages/CompanyProfile";
-import CompanyDirectory from "./pages/CompanyDirectory";
 import AdminAudioUpload from "./pages/AdminAudioUpload";
 import Episodes from "./pages/Episodes";
 import Stream from "./pages/Stream";
@@ -63,14 +60,11 @@ const App = () => {
             <AnimatedBackground>
               <BrowserRouter>
                 <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/jobs" element={<Jobs />} />
+                  <Route path="/" element={<LandingPage />} />
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/pro" element={<JobbyistPro />} />
                   <Route path="/builder" element={<Builder />} />
-                  <Route path="/companies" element={<CompanyDirectory />} />
-                  <Route path="/company/:companyId" element={<CompanyProfile />} />
                   <Route path="/admin/audio-upload" element={<AdminAudioUpload />} />
                   <Route path="/episodes" element={<Episodes />} />
                   <Route path="/stream" element={<Stream />} />

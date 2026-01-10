@@ -12,22 +12,15 @@ const Footer = () => {
 
   const footerSections = {
     locations: [
-      'Johannesburg',
-      'Cape Town', 
-      'Abuja',
-      'Lagos'
-    ],
-    jobTypes: [
-      'Full Time',
-      'Part Time',
-      'Remote',
-      'Contract'
+      'South Africa',
+      'Nigeria', 
+      'Kenya',
+      'Ghana'
     ],
     services: [
-      'Browse Job Listings',
       'Upgrade To Pro',
       'Resume/CV Builder',
-      'Company Directory'
+      'Upskilling Programs'
     ],
     legal: [
       'Privacy Policy',
@@ -47,7 +40,7 @@ const Footer = () => {
   return (
     <footer className="bg-muted/30 border-t">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Brand Section */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2 mb-4">
@@ -55,7 +48,7 @@ const Footer = () => {
               <Badge variant="secondary" className="ml-2">Beta</Badge>
             </div>
             <p className="text-muted-foreground mb-6 max-w-md">
-              Africa's leading job platform connecting top talent with premier employers across Nigeria and South Africa.
+              Africa's leading job platform connecting top talent with premier employers across the continent.
             </p>
             
             {/* Social Links */}
@@ -86,40 +79,15 @@ const Footer = () => {
 
           {/* Footer Link Sections */}
           <div>
-            <h4 className="font-semibold text-foreground mb-4">Locations</h4>
+            <h4 className="font-semibold text-foreground mb-4">Regions</h4>
             <ul className="space-y-2">
               {footerSections.locations.map((item) => (
                 <li key={item}>
-                  <a href={`/jobs?location=${encodeURIComponent(item)}`} className="text-muted-foreground hover:text-foreground transition-colors">
+                  <span className="text-muted-foreground">
                     {item}
-                  </a>
+                  </span>
                 </li>
               ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-semibold text-foreground mb-4">Job Types</h4>
-            <ul className="space-y-2">
-              {footerSections.jobTypes.map((item) => {
-                // Handle Remote separately as it's a filter, not a job type
-                if (item === 'Remote') {
-                  return (
-                    <li key={item}>
-                      <a href="/jobs?remote=true" className="text-muted-foreground hover:text-foreground transition-colors">
-                        {item}
-                      </a>
-                    </li>
-                  );
-                }
-                return (
-                  <li key={item}>
-                    <a href={`/jobs?type=${encodeURIComponent(item.toLowerCase().replace(' ', '-'))}`} className="text-muted-foreground hover:text-foreground transition-colors">
-                      {item}
-                    </a>
-                  </li>
-                );
-              })}
             </ul>
           </div>
 
@@ -127,15 +95,7 @@ const Footer = () => {
             <h4 className="font-semibold text-foreground mb-4">Services</h4>
             <ul className="space-y-2">
               {footerSections.services.map((item) => {
-                if (item === 'Browse Job Listings') {
-                  return (
-                    <li key={item}>
-                      <a href="/jobs" className="text-muted-foreground hover:text-foreground transition-colors">
-                        {item}
-                      </a>
-                    </li>
-                  );
-                } else if (item === 'Upgrade To Pro') {
+                if (item === 'Upgrade To Pro') {
                   return (
                     <li key={item}>
                       <a href="/pro" className="text-muted-foreground hover:text-foreground transition-colors">
@@ -151,10 +111,10 @@ const Footer = () => {
                       </a>
                     </li>
                   );
-                } else if (item === 'Company Directory') {
+                } else if (item === 'Upskilling Programs') {
                   return (
                     <li key={item}>
-                      <a href="/companies" className="text-muted-foreground hover:text-foreground transition-colors">
+                      <a href="/upskilling" className="text-muted-foreground hover:text-foreground transition-colors">
                         {item}
                       </a>
                     </li>
