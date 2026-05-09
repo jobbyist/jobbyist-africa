@@ -62,14 +62,27 @@ export interface Job {
   remote_allowed?: boolean;
 }
 
-/** Resolve an ISO-8601 country code from a location string. */
+/** Map of country name substrings/codes to ISO-3166-1 alpha-2 codes. */
+const COUNTRY_CODE_MAP: Array<[string, string]> = [
+  ['SOUTH AFRICA', 'ZA'],
+  ['NIGERIA', 'NG'],
+  ['KENYA', 'KE'],
+  ['GHANA', 'GH'],
+  ['EGYPT', 'EG'],
+  ['ETHIOPIA', 'ET'],
+  ['TANZANIA', 'TZ'],
+  ['UGANDA', 'UG'],
+  ['RWANDA', 'RW'],
+  ['SENEGAL', 'SN'],
+];
+
+/** Resolve an ISO-3166-1 alpha-2 country code from a location string. */
 function resolveCountryCode(locationPart: string | undefined): string {
   if (!locationPart) return 'ZA';
-  const upper = locationPart.toUpperCase();
-  if (upper.includes('SOUTH AFRICA') || upper === 'ZA') return 'ZA';
-  if (upper.includes('NIGERIA') || upper === 'NG') return 'NG';
-  if (upper.includes('KENYA') || upper === 'KE') return 'KE';
-  if (upper.includes('GHANA') || upper === 'GH') return 'GH';
+  const upper = locationPart.toUpperCase().trim();
+  for (const [name, code] of COUNTRY_CODE_MAP) {
+    if (upper.includes(name) || upper === code) return code;
+  }
   // Default to ZA for unknown African locations
   return 'ZA';
 }
@@ -91,7 +104,7 @@ export function generateJobSchema(job: Job): JobPosting {
       value: job.id
     },
     datePosted: job.posted_date || job.created_at,
-    employmentType: job.job_type.toUpperCase().replace(/-/g, '_'),
+    employmentType: job.job_type ? job.job_type.toUpperCase().replace(/-/g, '_') : 'OTHER',
     hiringOrganization: {
       "@type": "Organization",
       name: job.company,

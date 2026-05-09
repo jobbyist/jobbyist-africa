@@ -11,6 +11,14 @@ import { FloatingHomeButton } from '@/components/FloatingHomeButton';
 const CANONICAL_BASE = 'https://jobbyist.africa';
 const SCHEMA_SCRIPT_ID = 'job-detail-ld-json';
 
+/** Truncate text at a word boundary and append ellipsis if needed. */
+function truncateAtWordBoundary(text: string, maxLength: number): string {
+  if (text.length <= maxLength) return text;
+  const truncated = text.slice(0, maxLength);
+  const lastSpace = truncated.lastIndexOf(' ');
+  return (lastSpace > 0 ? truncated.slice(0, lastSpace) : truncated) + '…';
+}
+
 const JobDetail = () => {
   const { id } = useParams<{ id: string }>();
   const job = id ? getJobById(id) : undefined;
@@ -45,7 +53,7 @@ const JobDetail = () => {
       document.head.appendChild(meta);
     }
     const prev = meta.content;
-    meta.content = job.description.slice(0, 160);
+    meta.content = truncateAtWordBoundary(job.description, 160);
     return () => {
       if (created && meta) {
         meta.remove();
@@ -113,6 +121,11 @@ const JobDetail = () => {
     });
   };
 
+  const handleApply = () => {
+    if (!job.application_url) return;
+    window.open(job.application_url, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
@@ -171,15 +184,15 @@ const JobDetail = () => {
 
           <CardContent className="space-y-6">
             {/* Apply button */}
-            <Button
-              className="w-full sm:w-auto"
-              onClick={() =>
-                window.open(job.application_url, '_blank', 'noopener,noreferrer')
-              }
-            >
-              <ExternalLink className="h-4 w-4 mr-2" />
-              Apply Now
-            </Button>
+            {job.application_url && (
+              <Button
+                className="w-full sm:w-auto"
+                onClick={handleApply}
+              >
+                <ExternalLink className="h-4 w-4 mr-2" />
+                Apply Now
+              </Button>
+            )}
 
             {/* Job description */}
             <section>
