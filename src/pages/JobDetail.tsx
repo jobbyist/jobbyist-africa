@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getJobById } from '@/utils/loadJobs';
 import { injectJobSchema } from '@/utils/google-jobs-schema';
@@ -14,12 +14,45 @@ const SCHEMA_SCRIPT_ID = 'job-detail-ld-json';
 const JobDetail = () => {
   const { id } = useParams<{ id: string }>();
   const job = id ? getJobById(id) : undefined;
+  const [logoError, setLogoError] = useState(false);
 
   // Inject / clean up a single JobPosting JSON-LD script — no duplicates on re-render
   useEffect(() => {
     if (!job) return;
     const cleanup = injectJobSchema(job, SCHEMA_SCRIPT_ID);
     return cleanup;
+  }, [job]);
+
+  // Manage document title and meta description
+  useEffect(() => {
+    const prevTitle = document.title;
+    if (job) {
+      document.title = `${job.title} at ${job.company} | Jobbyist`;
+    }
+    return () => {
+      document.title = prevTitle;
+    };
+  }, [job]);
+
+  // Manage meta description
+  useEffect(() => {
+    if (!job) return;
+    let meta = document.querySelector<HTMLMetaElement>('meta[name="description"]');
+    const created = !meta;
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.name = 'description';
+      document.head.appendChild(meta);
+    }
+    const prev = meta.content;
+    meta.content = job.description.slice(0, 160);
+    return () => {
+      if (created && meta) {
+        meta.remove();
+      } else if (meta) {
+        meta.content = prev;
+      }
+    };
   }, [job]);
 
   // Update canonical link element
@@ -80,17 +113,8 @@ const JobDetail = () => {
     });
   };
 
-  const canonicalUrl = `${CANONICAL_BASE}/jobs/${job.id}`;
-  const pageTitle = `${job.title} at ${job.company} | Jobbyist`;
-  const pageDescription = job.description.slice(0, 160);
-
   return (
     <div className="min-h-screen bg-background">
-      {/* SEO Meta Tags */}
-      <title>{pageTitle}</title>
-      <meta name="description" content={pageDescription} />
-      <link rel="canonical" href={canonicalUrl} />
-
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         {/* Back navigation */}
         <div className="mb-6">
@@ -105,14 +129,12 @@ const JobDetail = () => {
         <Card>
           <CardHeader>
             <div className="flex flex-col gap-3">
-              {job.company_logo_url && (
+              {job.company_logo_url && !logoError && (
                 <img
                   src={job.company_logo_url}
                   alt={`${job.company} logo`}
                   className="h-16 w-16 object-contain rounded"
-                  onError={(e) => {
-                    (e.currentTarget as HTMLImageElement).style.display = 'none';
-                  }}
+                  onError={() => setLogoError(true)}
                 />
               )}
               <h1 className="text-3xl font-bold text-foreground">{job.title}</h1>
