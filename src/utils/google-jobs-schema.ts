@@ -62,6 +62,9 @@ export interface Job {
   remote_allowed?: boolean;
 }
 
+/** Default currency code used when no currency is available for a job. */
+const DEFAULT_CURRENCY = 'ZAR';
+
 /** Map of country name substrings/codes to ISO-3166-1 alpha-2 codes. */
 const COUNTRY_CODE_MAP: Array<[string, string]> = [
   ['SOUTH AFRICA', 'ZA'],
@@ -134,7 +137,7 @@ export function generateJobSchema(job: Job): JobPosting {
   if (job.salary_min && job.salary_min > 0) {
     schema.baseSalary = {
       "@type": "MonetaryAmount",
-      currency: job.currency || 'ZAR',
+      currency: job.currency || DEFAULT_CURRENCY,
       value: {
         "@type": "QuantitativeValue",
         value: job.salary_min,

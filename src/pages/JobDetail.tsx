@@ -113,7 +113,7 @@ const JobDetail = () => {
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    if (isNaN(date.getTime())) return dateString;
+    if (isNaN(date.getTime())) return 'Date unavailable';
     return date.toLocaleDateString('en-ZA', {
       year: 'numeric',
       month: 'long',
