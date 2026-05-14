@@ -9,7 +9,7 @@ export interface JobPosting {
     value: string;
   };
   datePosted: string;
-  validThrough: string;
+  validThrough?: string;
   employmentType: string;
   hiringOrganization: {
     "@type": "Organization";
@@ -44,7 +44,7 @@ export interface JobPosting {
   };
 }
 
-interface Job {
+export interface Job {
   id: string;
   title: string;
   company: string;
@@ -62,10 +62,41 @@ interface Job {
   remote_allowed?: boolean;
 }
 
+/** Default currency code used when no currency is available for a job. */
+const DEFAULT_CURRENCY = 'ZAR';
+
+/** Map of country name substrings/codes to ISO-3166-1 alpha-2 codes. */
+const COUNTRY_CODE_MAP: Array<[string, string]> = [
+  ['SOUTH AFRICA', 'ZA'],
+  ['NIGERIA', 'NG'],
+  ['KENYA', 'KE'],
+  ['GHANA', 'GH'],
+  ['EGYPT', 'EG'],
+  ['ETHIOPIA', 'ET'],
+  ['TANZANIA', 'TZ'],
+  ['UGANDA', 'UG'],
+  ['RWANDA', 'RW'],
+  ['SENEGAL', 'SN'],
+];
+
+/** Resolve an ISO-3166-1 alpha-2 country code from a location string. */
+function resolveCountryCode(locationPart: string | undefined): string {
+  if (!locationPart) return 'ZA';
+  const upper = locationPart.toUpperCase().trim();
+  for (const [name, code] of COUNTRY_CODE_MAP) {
+    if (upper.includes(name) || upper === code) return code;
+  }
+  // Default to ZA for unknown African locations
+  return 'ZA';
+}
+
 export function generateJobSchema(job: Job): JobPosting {
-  const [city, region, country] = job.location.split(', ');
-  
-  return {
+  const parts = job.location.split(', ');
+  const city = parts[0] || job.location;
+  const region = parts.length >= 3 ? parts[1] : undefined;
+  const countryRaw = parts.length >= 3 ? parts[2] : parts[1];
+
+  const schema: JobPosting = {
     "@context": "https://schema.org/",
     "@type": "JobPosting",
     title: job.title,
@@ -76,36 +107,71 @@ export function generateJobSchema(job: Job): JobPosting {
       value: job.id
     },
     datePosted: job.posted_date || job.created_at,
-    validThrough: job.expires_date,
-    employmentType: job.job_type.toUpperCase().replace('-', '_'),
+    employmentType: job.job_type ? job.job_type.toUpperCase().replace(/-/g, '_') : 'OTHER',
     hiringOrganization: {
       "@type": "Organization",
       name: job.company,
-      sameAs: job.application_url,
-      logo: job.company_logo_url
+      ...(job.application_url ? { sameAs: job.application_url } : {}),
+      ...(job.company_logo_url ? { logo: job.company_logo_url } : {})
     },
     jobLocation: {
       "@type": "Place",
       address: {
         "@type": "PostalAddress",
         addressLocality: city,
-        addressRegion: region,
-        addressCountry: country.includes('South Africa') ? 'ZA' : 'NG'
+        ...(region ? { addressRegion: region } : {}),
+        addressCountry: resolveCountryCode(countryRaw)
       }
-    },
-    ...(job.salary_min && {
-      baseSalary: {
-        "@type": "MonetaryAmount",
-        currency: job.currency,
-        value: {
-          "@type": "QuantitativeValue",
-          value: job.salary_min,
-          unitText: "YEAR"
-        }
+    }
+  };
+
+  // Only include validThrough when a valid expiry date is present
+  if (job.expires_date) {
+    const expiry = new Date(job.expires_date);
+    if (!isNaN(expiry.getTime())) {
+      schema.validThrough = job.expires_date;
+    }
+  }
+
+  // Only include baseSalary when salary data is available
+  if (job.salary_min && job.salary_min > 0) {
+    schema.baseSalary = {
+      "@type": "MonetaryAmount",
+      currency: job.currency || DEFAULT_CURRENCY,
+      value: {
+        "@type": "QuantitativeValue",
+        value: job.salary_min,
+        unitText: "YEAR"
       }
-    }),
-    ...(job.remote_allowed && {
-      jobLocationType: "TELECOMMUTE"
-    })
+    };
+  }
+
+  // Mark remote jobs using Google's TELECOMMUTE type
+  if (job.remote_allowed) {
+    schema.jobLocationType = "TELECOMMUTE";
+  }
+
+  return schema;
+}
+
+/**
+ * Inject a single JobPosting JSON-LD script into <head>.
+ * Returns a cleanup function that removes the script element.
+ * Passing a `scriptId` prevents duplicate scripts on re-render.
+ */
+export function injectJobSchema(job: Job, scriptId: string): () => void {
+  // Remove any previously injected script with the same id
+  const existing = document.getElementById(scriptId);
+  if (existing) existing.remove();
+
+  const script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.id = scriptId;
+  script.text = JSON.stringify(generateJobSchema(job));
+  document.head.appendChild(script);
+
+  return () => {
+    const el = document.getElementById(scriptId);
+    if (el) el.remove();
   };
 }

@@ -16,6 +16,8 @@ import AnimatedBackground from "@/components/AnimatedBackground";
 import LandingPage from "./pages/LandingPage";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
+import Jobs from "./pages/Jobs";
+import JobDetail from "./pages/JobDetail";
 import JobbyistPro from "./pages/JobbyistPro";
 import Builder from "./pages/Builder";
 import AdminAudioUpload from "./pages/AdminAudioUpload";
@@ -62,6 +64,8 @@ const App = () => {
                   <Route path="/" element={<LandingPage />} />
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/profile" element={<Profile />} />
+                  <Route path="/jobs" element={<Jobs />} />
+                  <Route path="/jobs/:id" element={<JobDetail />} />
                   <Route path="/pro" element={<JobbyistPro />} />
                   <Route path="/builder" element={<Builder />} />
                   <Route path="/admin/audio-upload" element={<AdminAudioUpload />} />

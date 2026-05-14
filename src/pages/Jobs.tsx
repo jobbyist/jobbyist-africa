@@ -5,7 +5,6 @@ import { supabase } from '@/integrations/supabase/client';
 import { JobFilters as JobFiltersComponent } from '@/components/JobFilters';
 import { JobCard } from '@/components/JobCard';
 import AdPlaceholder from '@/components/AdPlaceholder';
-import { generateJobSchema } from '@/utils/google-jobs-schema';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
@@ -143,26 +142,6 @@ const Jobs = () => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
-  // Add structured data for Google Jobs
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.text = JSON.stringify({
-      "@context": "https://schema.org/",
-      "@type": "ItemList",
-      "itemListElement": filteredJobs.slice(0, 10).map((job, index) => ({
-        "@type": "ListItem",
-        "position": index + 1,
-        "item": generateJobSchema(job)
-      }))
-    });
-    document.head.appendChild(script);
-
-    return () => {
-      document.head.removeChild(script);
-    };
-  }, [filteredJobs]);
 
   if (loading) {
     return (
