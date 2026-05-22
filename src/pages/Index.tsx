@@ -10,7 +10,7 @@ import { AudioPlayer } from '@/components/AudioPlayer';
 import AdPlaceholder from '@/components/AdPlaceholder';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
-import { Search, Briefcase, Users, TrendingUp, LogOut, User, Zap, Crown, FileText, Clock, CheckCircle, ArrowRight, Calendar, Eye, Building2, Target, Shield, GraduationCap, Trophy } from 'lucide-react';
+import { Search, Briefcase, Users, TrendingUp, LogOut, User, Zap, Crown, FileText, Clock, CheckCircle, ArrowRight, Calendar, Eye, Building2, Target, Shield, GraduationCap, Trophy, MessageCircleMore, Sparkles } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import Footer from '@/components/Footer';
 import RecruitmentSuiteModal from '@/components/RecruitmentSuiteModal';
@@ -242,12 +242,12 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/5">
+    <div className="min-h-screen bg-gradient-to-br from-primary/10 via-background to-secondary/10 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       {/* Stories Section - Above Header */}
       <Stories />
       
       {/* Header */}
-      <header className="border-b bg-background/80 backdrop-blur-sm sticky top-16 z-40">
+      <header className="border-b border-white/20 dark:border-white/10 bg-white/65 dark:bg-slate-900/70 backdrop-blur-xl supports-[backdrop-filter]:bg-white/55 sticky top-16 z-40 shadow-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -326,16 +326,16 @@ const Index = () => {
             Discover the most highly sought after, expertly curated job opportunities offered by world-class, verified companies, employers and recruiters looking for talent across Africa.
           </p>
           
-          <div className="flex flex-wrap justify-center gap-8 mb-8">
-            <div className="flex items-center gap-3 bg-primary/5 px-4 py-2 rounded-full">
+          <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-8">
+            <div className="flex items-center gap-3 bg-white/60 dark:bg-white/10 border border-white/50 dark:border-white/20 backdrop-blur-xl px-4 py-2 rounded-full shadow-sm">
               <Briefcase className="h-6 w-6 text-primary" />
               <span className="font-semibold">New jobs added every day</span>
             </div>
-            <div className="flex items-center gap-3 bg-primary/5 px-4 py-2 rounded-full">
+            <div className="flex items-center gap-3 bg-white/60 dark:bg-white/10 border border-white/50 dark:border-white/20 backdrop-blur-xl px-4 py-2 rounded-full shadow-sm">
               <Users className="h-6 w-6 text-primary" />
               <span className="font-semibold">Verified Companies Only</span>
             </div>
-            <div className="flex items-center gap-3 bg-primary/5 px-4 py-2 rounded-full">
+            <div className="flex items-center gap-3 bg-white/60 dark:bg-white/10 border border-white/50 dark:border-white/20 backdrop-blur-xl px-4 py-2 rounded-full shadow-sm">
               <TrendingUp className="h-6 w-6 text-primary" />
               <span className="font-semibold">Daily Updates</span>
             </div>
@@ -344,7 +344,7 @@ const Index = () => {
       </section>
 
       {/* Featured Companies Section */}
-      <section className="py-20 bg-background/50 border-y">
+      <section className="py-20 bg-white/35 dark:bg-slate-950/40 border-y border-white/30 dark:border-white/10 backdrop-blur-sm">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
@@ -499,7 +499,7 @@ const Index = () => {
       </section>
 
       {/* Upskilling Programs Section */}
-      <section className="py-20 bg-gradient-to-r from-secondary/10 via-background to-primary/5">
+      <section className="py-20 bg-gradient-to-r from-secondary/15 via-white/30 to-primary/10 dark:from-slate-900/80 dark:via-slate-900/40 dark:to-primary/20 border-y border-white/20 dark:border-white/10">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
@@ -564,7 +564,7 @@ const Index = () => {
       </section>
 
       {/* Recruitment Suite Section */}
-      <section className="py-20 bg-gradient-to-r from-primary/5 via-background to-secondary/5">
+      <section className="py-20 bg-gradient-to-r from-primary/10 via-white/30 to-secondary/10 dark:from-primary/20 dark:via-slate-900/60 dark:to-secondary/20">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
@@ -634,6 +634,7 @@ const Index = () => {
 
       {/* Main Content */}
       <div className="container mx-auto px-4 pb-12">
+        <div className="rounded-3xl border border-white/35 dark:border-white/10 bg-white/40 dark:bg-slate-900/45 backdrop-blur-2xl p-4 md:p-6 shadow-[0_12px_40px_rgba(2,6,23,0.08)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.45)]">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Filters Sidebar */}
           <aside className="lg:col-span-1">
@@ -708,10 +709,11 @@ const Index = () => {
             )}
           </main>
         </div>
+        </div>
       </div>
 
       {/* Jobbyist Pro Section */}
-      <section className="py-16 bg-gradient-to-r from-primary/10 via-primary/5 to-secondary/10">
+      <section className="py-16 bg-gradient-to-r from-primary/15 via-white/30 to-secondary/15 dark:from-primary/20 dark:via-slate-900/60 dark:to-secondary/20">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-primary/20 text-primary px-4 py-2 rounded-full mb-6">
@@ -770,7 +772,7 @@ const Index = () => {
       </div>
 
       {/* ResumeAudit Section */}
-      <section className="py-16 bg-gradient-to-r from-secondary/10 via-background to-primary/5">
+      <section className="py-16 bg-gradient-to-r from-secondary/15 via-white/20 to-primary/10 dark:from-slate-900/80 dark:via-slate-900/60 dark:to-primary/20">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -836,6 +838,54 @@ const Index = () => {
                   100% Free • No Credit Card Required
                 </p>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Community Forum Teaser Section */}
+      <section className="py-16 px-4">
+        <div className="container mx-auto">
+          <div className="max-w-5xl mx-auto rounded-3xl border border-white/40 dark:border-white/10 bg-white/45 dark:bg-slate-900/55 backdrop-blur-2xl p-8 md:p-12 shadow-[0_20px_60px_rgba(15,23,42,0.12)] dark:shadow-[0_20px_70px_rgba(2,6,23,0.6)]">
+            <div className="flex flex-wrap items-center justify-between gap-6 mb-8">
+              <div className="inline-flex items-center gap-2 bg-primary/15 dark:bg-primary/25 text-primary px-4 py-2 rounded-full">
+                <MessageCircleMore className="h-4 w-4" />
+                <span className="font-semibold text-sm">Coming Soon</span>
+              </div>
+              <div className="inline-flex items-center gap-2 text-sm text-muted-foreground">
+                <Sparkles className="h-4 w-4 text-primary" />
+                <span>Built for peer learning, referrals & support</span>
+              </div>
+            </div>
+
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              The Jobbyist Community Forum is on the way
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mb-8">
+              We are building a collaborative forum where job seekers can share interview experiences, discover learning resources, join accountability circles, and connect directly with mentors across Africa.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+              <div className="rounded-2xl border border-white/50 dark:border-white/10 bg-white/60 dark:bg-slate-800/60 p-5">
+                <h3 className="font-semibold mb-2">Role-specific channels</h3>
+                <p className="text-sm text-muted-foreground">Join focused discussions for engineering, data, product, design and operations tracks.</p>
+              </div>
+              <div className="rounded-2xl border border-white/50 dark:border-white/10 bg-white/60 dark:bg-slate-800/60 p-5">
+                <h3 className="font-semibold mb-2">Mentor office hours</h3>
+                <p className="text-sm text-muted-foreground">Get practical career advice, portfolio reviews and CV feedback from practitioners.</p>
+              </div>
+              <div className="rounded-2xl border border-white/50 dark:border-white/10 bg-white/60 dark:bg-slate-800/60 p-5">
+                <h3 className="font-semibold mb-2">Referral opportunities</h3>
+                <p className="text-sm text-muted-foreground">Exchange verified openings and referral tips from trusted community members.</p>
+              </div>
+            </div>
+
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+              <p className="text-sm text-muted-foreground">Want first access when we launch? Join our waitlist and shape the first community spaces.</p>
+              <Button size="lg" className="md:min-w-[260px]" onClick={() => setIsRecruitmentModalOpen(true)}>
+                Join Forum Waitlist
+                <ArrowRight className="h-5 w-5 ml-2" />
+              </Button>
             </div>
           </div>
         </div>
