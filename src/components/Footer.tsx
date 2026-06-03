@@ -1,33 +1,26 @@
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Briefcase, Facebook, Linkedin, Search, Moon, Sun, Smartphone } from 'lucide-react';
-import { useState } from 'react';
+import { Facebook, Linkedin, Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import SearchModal from './SearchModal';
+import { SUPPORTED_COUNTRIES, getCountryUrl } from '@/utils/countryDetection';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const { theme, setTheme } = useTheme();
 
+  const regionLinks = SUPPORTED_COUNTRIES.filter((country) => country.code !== 'OTHER');
+
   const footerSections = {
-    locations: [
-      'South Africa',
-      'Nigeria', 
-      'Kenya',
-      'Ghana'
-    ],
     services: [
       'Upgrade To Pro',
       'Resume/CV Builder',
-      'Upskilling Programs'
+      'Upskilling Programs',
     ],
     legal: [
       'Privacy Policy',
       'Terms of Service',
       'Cookie Policy',
-      'Data Protection'
-    ]
+      'Data Protection',
+    ],
   };
 
   const socialLinks = [
@@ -43,12 +36,11 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <img src="/jobbyist26.svg" alt="Jobbyist Logo" style={{ width: '200px', height: 'auto' }} />
-             
             </div>
             <p className="text-muted-foreground mb-6 max-w-md">
-              Africa's leading job platform connecting top talent with premier employers across the continent.
+              Africa's leading job platform connecting top talent with premier employers across South Africa, Nigeria, Kenya, Ghana, Egypt, Morocco, and beyond.
             </p>
-            
+
             {/* Social Links */}
             <div className="flex gap-4 mb-6">
               {socialLinks.map((social) => {
@@ -61,9 +53,9 @@ const Footer = () => {
                     className="w-10 h-10 p-0"
                     asChild
                   >
-                    <a 
-                      href={social.href} 
-                      target="_blank" 
+                    <a
+                      href={social.href}
+                      target="_blank"
                       rel="noopener noreferrer"
                       aria-label={social.label}
                     >
@@ -79,11 +71,23 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold text-foreground mb-4">Regions</h4>
             <ul className="space-y-2">
-              {footerSections.locations.map((item) => (
-                <li key={item}>
-                  <span className="text-muted-foreground">
-                    {item}
-                  </span>
+              {regionLinks.map((country) => (
+                <li key={country.code}>
+                  <a
+                    href={getCountryUrl(country.code)}
+                    className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+                    aria-label={`Visit Jobbyist ${country.name}`}
+                  >
+                    {country.flagSrc && (
+                      <img
+                        src={country.flagSrc}
+                        alt=""
+                        loading="lazy"
+                        className="h-4 w-6 rounded-sm object-cover ring-1 ring-border"
+                      />
+                    )}
+                    <span>{country.name}</span>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -153,11 +157,11 @@ const Footer = () => {
                 Stay connected with job opportunities on the go
               </p>
             </div>
-            
+
             <div className="flex flex-col sm:flex-row gap-4">
               {/* App Store Badge */}
-              <a 
-                href="#" 
+              <a
+                href="#"
                 className="inline-flex items-center gap-3 bg-black dark:bg-white text-white dark:text-black px-6 py-3 rounded-lg hover:opacity-80 transition-opacity"
                 aria-label="Download on the App Store"
               >
@@ -173,8 +177,8 @@ const Footer = () => {
               </a>
 
               {/* Google Play Badge */}
-              <a 
-                href="#" 
+              <a
+                href="#"
                 className="inline-flex items-center gap-3 bg-black dark:bg-white text-white dark:text-black px-6 py-3 rounded-lg hover:opacity-80 transition-opacity"
                 aria-label="Get it on Google Play"
               >
@@ -202,7 +206,7 @@ const Footer = () => {
               Made with ❤️ for African job seekers
             </p>
           </div>
-          
+
           {/* Theme Toggle */}
           <div className="flex items-center gap-2">
             <span className="text-sm text-muted-foreground">Theme:</span>
@@ -219,11 +223,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      
-      <SearchModal 
-        open={isSearchModalOpen} 
-        onOpenChange={setIsSearchModalOpen} 
-      />
     </footer>
   );
 };
