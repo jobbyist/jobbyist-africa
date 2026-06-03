@@ -25,7 +25,7 @@ interface OnboardingModalProps {
 type OnboardingStep = 1 | 2 | 3 | 4;
 
 const EXPERIENCE_LEVELS = ['entry', 'junior', 'mid', 'senior', 'executive'] as const;
-const COUNTRIES = ['South Africa', 'Nigeria', 'Kenya', 'Ghana', 'Other'];
+const COUNTRIES = ['South Africa', 'Nigeria', 'Kenya', 'Ghana', 'Egypt', 'Morocco', 'Other'];
 
 export const OnboardingModal = ({ open, onOpenChange, userId }: OnboardingModalProps) => {
   const [step, setStep] = useState<OnboardingStep>(1);
@@ -195,7 +195,7 @@ export const OnboardingModal = ({ open, onOpenChange, userId }: OnboardingModalP
                 <Input
                   id="location"
                   type="text"
-                  placeholder="e.g., Johannesburg, Lagos, Nairobi"
+                  placeholder="e.g., Johannesburg, Lagos, Cairo"
                   value={formData.location}
                   onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
                   className="text-lg py-6"
