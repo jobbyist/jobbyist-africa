@@ -1,3 +1,5 @@
+const companyNotice = 'Jobbyist is a subsidiary of Gravitas Industries Pty Ltd, a private company registered in South Africa under registration number 2024/596436/07.';
+
 const PrivacyPolicy = () => {
   return (
     <div className="min-h-screen bg-background">
@@ -9,7 +11,10 @@ const PrivacyPolicy = () => {
         <header className="mb-12">
           <h1 className="text-4xl font-bold text-foreground mb-4">Privacy Policy</h1>
           <p className="text-xl text-muted-foreground">
-            Last updated: September 17, 2025
+            Last updated: June 4, 2026
+          </p>
+          <p className="mt-4 rounded-lg border bg-muted/30 p-4 text-muted-foreground">
+            {companyNotice}
           </p>
         </header>
 
@@ -17,7 +22,7 @@ const PrivacyPolicy = () => {
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-foreground mb-4">1. Introduction</h2>
             <p className="text-muted-foreground mb-4">
-              Jobbyist ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our job platform website and services.
+              Jobbyist ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our job platform website and services. {companyNotice}
             </p>
           </section>
 
@@ -69,7 +74,7 @@ const PrivacyPolicy = () => {
 
             <h3 className="text-xl font-medium text-foreground mb-3">4.3 Legal Requirements</h3>
             <p className="text-muted-foreground mb-4">
-              We may disclose information when required by law, court order, or government regulation, or to protect the rights, property, or safety of Jobbyist, our users, or others.
+              We may disclose information when required by law, court order, or government regulation, or to protect the rights, property, or safety of Jobbyist, Gravitas Industries Pty Ltd, our users, or others.
             </p>
           </section>
 
@@ -120,7 +125,14 @@ const PrivacyPolicy = () => {
           </section>
 
           <section className="mb-8">
-            <h2 className="text-2xl font-semibold text-foreground mb-4">11. Contact Us</h2>
+            <h2 className="text-2xl font-semibold text-foreground mb-4">11. Company Information</h2>
+            <p className="text-muted-foreground mb-4">
+              {companyNotice}
+            </p>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-foreground mb-4">12. Contact Us</h2>
             <p className="text-muted-foreground mb-4">
               If you have questions about this Privacy Policy or our data practices, please contact us:
             </p>

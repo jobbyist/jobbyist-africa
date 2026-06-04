@@ -24,6 +24,8 @@ import AdminAudioUpload from "./pages/AdminAudioUpload";
 import Episodes from "./pages/Episodes";
 import Stream from "./pages/Stream";
 import UpskillingPrograms from "./pages/UpskillingPrograms";
+import FoundingMembers from "./pages/FoundingMembers";
+import Whitepaper from "./pages/Whitepaper";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import CookiePolicy from "./pages/CookiePolicy";
@@ -72,6 +74,8 @@ const App = () => {
                   <Route path="/episodes" element={<Episodes />} />
                   <Route path="/stream" element={<Stream />} />
                   <Route path="/upskilling" element={<UpskillingPrograms />} />
+                  <Route path="/founding-members" element={<FoundingMembers />} />
+                  <Route path="/whitepaper" element={<Whitepaper />} />
                   <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                   <Route path="/terms-of-service" element={<TermsOfService />} />
                   <Route path="/cookie-policy" element={<CookiePolicy />} />
