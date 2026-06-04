@@ -1,31 +1,33 @@
 import { Button } from '@/components/ui/button';
-import { Facebook, Linkedin, Moon, Sun } from 'lucide-react';
-import { useTheme } from 'next-themes';
+import { Facebook, Linkedin } from 'lucide-react';
 import { SUPPORTED_COUNTRIES, getCountryUrl } from '@/utils/countryDetection';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const { theme, setTheme } = useTheme();
 
   const regionLinks = SUPPORTED_COUNTRIES.filter((country) => country.code !== 'OTHER');
 
-  const footerSections = {
-    services: [
-      'Upgrade To Pro',
-      'Resume/CV Builder',
-      'Upskilling Programs',
-    ],
-    legal: [
-      'Privacy Policy',
-      'Terms of Service',
-      'Cookie Policy',
-      'Data Protection',
-    ],
-  };
+  const communityLinks = [
+    { label: 'Follow on Facebook', href: 'https://facebook.com/@JobbyistZA/' },
+    { label: 'Connect on LinkedIn', href: 'https://www.linkedin.com/company/jobbyist/' },
+    { label: 'Follow on Twitter/X', href: 'https://twitter.com/JobbyistZA' },
+    { label: 'Whatsapp Channel:', href: 'https://whatsapp.com/channel/0029VbD9BMXD8SE7HzhEEr24' },
+    { label: 'Contact Support', href: 'mailto:support@jobbyist.africa' },
+    { label: 'Rate Us On Google', href: 'https://google.com' },
+  ];
+
+  const quickLinks = [
+    { label: 'Founding Members', href: 'https://jobbyist.africa/founding-members' },
+    { label: 'Whitepaper 2026/27', href: 'https://jobbyist.africa/whitepaper' },
+    { label: 'Privacy Policy', href: '/privacy-policy' },
+    { label: 'Terms of Service', href: '/terms-of-service' },
+    { label: 'Cookie Policy', href: '/cookie-policy' },
+    { label: 'Data Protection', href: '/data-protection' },
+  ];
 
   const socialLinks = [
-    { icon: Facebook, href: 'https://facebook.com/JobbyistZA', label: 'Facebook' },
-    { icon: Linkedin, href: 'https://linkedin.com/company/jobbyist', label: 'LinkedIn' },
+    { icon: Facebook, href: 'https://facebook.com/@JobbyistZA/', label: 'Facebook' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/company/jobbyist/', label: 'LinkedIn' },
   ];
 
   return (
@@ -37,8 +39,11 @@ const Footer = () => {
             <div className="flex items-center gap-2 mb-4">
               <img src="/jobbyist26.svg" alt="Jobbyist Logo" style={{ width: '200px', height: 'auto' }} />
             </div>
-            <p className="text-muted-foreground mb-6 max-w-md">
+            <p className="text-muted-foreground mb-3 max-w-md">
               Africa's leading job platform connecting top talent with premier employers across South Africa, Nigeria, Kenya, Ghana, Egypt, Morocco, and beyond.
+            </p>
+            <p className="text-muted-foreground text-sm mb-6 max-w-md">
+              Jobbyist is a subsidiary of Gravitas Industries Pty Ltd, a private company registered in South Africa under registration number 2024/596436/07.
             </p>
 
             {/* Social Links */}
@@ -94,53 +99,33 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-semibold text-foreground mb-4">Services</h4>
+            <h4 className="font-semibold text-foreground mb-4">Community</h4>
             <ul className="space-y-2">
-              {footerSections.services.map((item) => {
-                if (item === 'Upgrade To Pro') {
-                  return (
-                    <li key={item}>
-                      <a href="/pro" className="text-muted-foreground hover:text-foreground transition-colors">
-                        {item}
-                      </a>
-                    </li>
-                  );
-                } else if (item === 'Resume/CV Builder') {
-                  return (
-                    <li key={item}>
-                      <a href="/builder" className="text-muted-foreground hover:text-foreground transition-colors">
-                        {item}
-                      </a>
-                    </li>
-                  );
-                } else if (item === 'Upskilling Programs') {
-                  return (
-                    <li key={item}>
-                      <a href="/upskilling" className="text-muted-foreground hover:text-foreground transition-colors">
-                        {item}
-                      </a>
-                    </li>
-                  );
-                } else {
-                  return (
-                    <li key={item}>
-                      <a href={`/${item.toLowerCase().replace(/[\s-]/g, '-')}`} className="text-muted-foreground hover:text-foreground transition-colors">
-                        {item}
-                      </a>
-                    </li>
-                  );
-                }
-              })}
+              {communityLinks.map((item) => (
+                <li key={item.label}>
+                  <a
+                    href={item.href}
+                    target={item.href.startsWith('http') ? '_blank' : undefined}
+                    rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
           <div>
-            <h4 className="font-semibold text-foreground mb-4">Legal Stuff</h4>
+            <h4 className="font-semibold text-foreground mb-4">Quick Links</h4>
             <ul className="space-y-2">
-              {footerSections.legal.map((item) => (
-                <li key={item}>
-                  <a href={`/${item.toLowerCase().replace(/[\s-]/g, '-')}`} className="text-muted-foreground hover:text-foreground transition-colors">
-                    {item}
+              {quickLinks.map((item) => (
+                <li key={item.label}>
+                  <a
+                    href={item.href}
+                    className="text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {item.label}
                   </a>
                 </li>
               ))}
@@ -205,21 +190,6 @@ const Footer = () => {
             <p className="text-muted-foreground text-sm">
               Made with ❤️ for African job seekers
             </p>
-          </div>
-
-          {/* Theme Toggle */}
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">Theme:</span>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="h-8 w-8 p-0"
-            >
-              <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              <span className="sr-only">Toggle theme</span>
-            </Button>
           </div>
         </div>
       </div>
