@@ -11,9 +11,9 @@ const Footer = () => {
     { label: 'Follow on Facebook', href: 'https://facebook.com/@JobbyistZA/' },
     { label: 'Connect on LinkedIn', href: 'https://www.linkedin.com/company/jobbyist/' },
     { label: 'Follow on Twitter/X', href: 'https://twitter.com/JobbyistZA' },
-    { label: 'Whatsapp Channel:', href: 'https://whatsapp.com/channel/0029VbD9BMXD8SE7HzhEEr24' },
+    { label: 'Whatsapp Channel', href: 'https://whatsapp.com/channel/0029VbD9BMXD8SE7HzhEEr24' },
     { label: 'Contact Support', href: 'mailto:support@jobbyist.africa' },
-    { label: 'Rate Us On Google', href: 'https://google.com' },
+    { label: 'Review on Google', href: 'https://google.com' },
   ];
 
   const quickLinks = [
@@ -46,7 +46,7 @@ const Footer = () => {
               Jobbyist is a subsidiary of Gravitas Industries Pty Ltd, a private company registered in South Africa under registration number 2024/596436/07.
             </p>
 
-            {/* Social Links */}
+            {/* Contact Icons */}
             <div className="flex gap-4 mb-6">
               {socialLinks.map((social) => {
                 const Icon = social.icon;
@@ -137,7 +137,7 @@ const Footer = () => {
         <div className="border-t border-border mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-6">
             <div className="text-center md:text-left">
-              <h4 className="font-semibold text-foreground mb-2">Get the Mobile App</h4>
+              <h4 className="font-semibold text-foreground mb-2">Get Early Access To The Mobile App</h4>
               <p className="text-sm text-muted-foreground">
                 Stay connected with job opportunities on the go
               </p>
@@ -148,7 +148,7 @@ const Footer = () => {
               <a
                 href="#"
                 className="inline-flex items-center gap-3 bg-black dark:bg-white text-white dark:text-black px-6 py-3 rounded-lg hover:opacity-80 transition-opacity"
-                aria-label="Download on the App Store"
+                aria-label="Coming to the App Store"
               >
                 <div className="flex items-center justify-center w-8 h-8">
                   <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
@@ -165,7 +165,7 @@ const Footer = () => {
               <a
                 href="#"
                 className="inline-flex items-center gap-3 bg-black dark:bg-white text-white dark:text-black px-6 py-3 rounded-lg hover:opacity-80 transition-opacity"
-                aria-label="Get it on Google Play"
+                aria-label="Coming to Google Play"
               >
                 <div className="flex items-center justify-center w-8 h-8">
                   <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
